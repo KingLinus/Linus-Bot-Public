@@ -53,89 +53,16 @@ client.on('message', message => {
 
     }*/
 
-    //Hidden Meme outputs
-    var hiddenmeme = message.content.toLowerCase();
-    if(message.author.bot) hiddenmeme = "";
-	/*if (hiddenmeme.search('hmmm')>-1 && !message.author.bot){
-        try {
-            const command = client.commands.get('hmmm');
-
-            //Forcing the command to have a cooldown time (ping.js)
-            if (!cooldowns.has(command.name)) {
-		        cooldowns.set(command.name, new Discord.Collection());
-	        }
-            const now = Date.now();
-            const timestamps = cooldowns.get(command.name);
-            const cooldownAmount = (command.cooldown || 3) * 1000;
-            if (timestamps.has(message.author.id)) {
-                const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
-                if (now < expirationTime) {
-                    return;
-                }
-            }
-
-            command.execute(message);
-            
-            //Deletes the message after the time has passed
-            timestamps.set(message.author.id, now);
-            setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
-        }
-         catch (error) {
-            console.error(error);
-            message.reply('there was an error trying to execute that command!');
-        }
-    }*/
-
-	  if (hiddenmeme.search('when gacha')>-1){
-      return message.channel.send('Now.');
-		} /*else if (hiddenmeme.search('i am ')>-1) {
-      return message
-              .channel
-              .send('Hi ' 
-                + message
-                    .content
-                    .substring(message
-                      .content
-                      .toLowerCase()
-                      .search('i am ')+5))
-              .then(
-                message
-                  .channel
-                  .send('I am Linus bot')
-              ); 
-    } else if (hiddenmeme.search("i'm ")>-1) {
-      return message
-              .channel
-              .send('Hi ' 
-                + message
-                    .content
-                    .substring(message
-                      .content
-                      .toLowerCase()
-                      .search("i'm ")+4))
-              .then(
-                message
-                  .channel
-                  .send('I am Linus bot')
-              ); 
-    } else if (hiddenmeme.search('im ')==0 
-      || hiddenmeme.search(' im ')>-1) {
-      return message
-              .channel
-              .send('Hi ' 
-                + message
-                    .content
-                    .substring(message
-                      .content
-                      .toLowerCase()
-                      .search('im ')+3))
-              .then(
-                message
-                  .channel
-                  .send('I am Linus bot')
-              ); 
-  }  */    
-
+    const Database = require("@replit/database");
+    const db = new Database();
+    db.get(message.guild.id).then(value => {
+      if(value) {
+        db.get(message.author.id).then(isUserBlacklisted => {
+          if(!isUserBlacklisted) executeHiddenMeme(client, message);
+        });
+      } 
+    });
+    
     //Logs channel, linus bot is a logger, warning
     const LOGCHANNEL = 'logs';
     if (message.channel.type == 'text' && !message.author.bot) {
@@ -243,5 +170,88 @@ client.on('message', message => {
     }
 
 });
+
+var executeHiddenMeme = function(client, message) {
+  var hiddenmeme = message.content.toLowerCase();
+  if(message.author.bot) hiddenmeme = "";
+  if (hiddenmeme.search('hmmm')>-1 && !message.author.bot){
+      try {
+          const command = client.commands.get('hmmm');
+
+          //Forcing the command to have a cooldown time (ping.js)
+          if (!cooldowns.has(command.name)) {
+          cooldowns.set(command.name, new Discord.Collection());
+        }
+          const now = Date.now();
+          const timestamps = cooldowns.get(command.name);
+          const cooldownAmount = (command.cooldown || 3) * 1000;
+          if (timestamps.has(message.author.id)) {
+              const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
+              if (now < expirationTime) {
+                  return;
+              }
+          }
+
+          command.execute(message);
+          
+          //Deletes the message after the time has passed
+          timestamps.set(message.author.id, now);
+          setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
+      }
+        catch (error) {
+          console.error(error);
+          message.reply('there was an error trying to execute that command!');
+      }
+  }
+
+  if (hiddenmeme.search('when gacha')>-1){
+    return message.channel.send('Now.');
+  } else if (hiddenmeme.search('i am ')>-1) {
+      var name = message
+                  .content
+                  .substring(message
+                    .content
+                    .toLowerCase()
+                    .search('i am ')+5);
+      rename(message.guild, message.author, name);
+  } else if (hiddenmeme.search("i'm ")>-1) {
+      var name = message
+                  .content
+                  .substring(message
+                    .content
+                    .toLowerCase()
+                    .search("i'm ")+4);
+      rename(message.guild, message.author, name);
+  } else if (hiddenmeme.search('im ')==0 
+    || hiddenmeme.search(' im ')>-1) {
+      var name = message
+                  .content
+                  .substring(message
+                    .content
+                    .toLowerCase()
+                    .search('im ')+3);
+      rename(message.guild, message.author, name);
+  }      
+}
+
+var rename = function(guild, user, name) {
+  var member = guild.fetchMember(user.id)
+  .then(member => {
+    member.setNickname(name)
+  })
+  .catch(err => {});
+};
+
+var sendIAmResponse = function(message, name) {
+  return message
+            .channel
+            .send('Hi ' 
+              + name)
+            .then(
+              message
+                .channel
+                .send('I am Linus bot')
+            ); 
+}
 
 client.login(token);
