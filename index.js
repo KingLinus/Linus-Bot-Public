@@ -88,7 +88,7 @@ client.on('message', message => {
 
 	  if (hiddenmeme.search('when gacha')>-1){
       return message.channel.send('Now.');
-    } else if (hiddenmeme.search('i am ')>-1) {
+		} /*else if (hiddenmeme.search('i am ')>-1) {
       return message
               .channel
               .send('Hi ' 
@@ -118,7 +118,8 @@ client.on('message', message => {
                   .channel
                   .send('I am Linus bot')
               ); 
-    } else if (hiddenmeme.search('im ')>-1) {
+    } else if (hiddenmeme.search('im ')==0 
+      || hiddenmeme.search(' im ')>-1) {
       return message
               .channel
               .send('Hi ' 
@@ -133,8 +134,7 @@ client.on('message', message => {
                   .channel
                   .send('I am Linus bot')
               ); 
-    }    
-
+  }  */    
 
     //Logs channel, linus bot is a logger, warning
     const LOGCHANNEL = 'logs';
@@ -146,7 +146,6 @@ client.on('message', message => {
         logger.send(message.author.username + ' said: "' + message.cleanContent + '" in the "' + message.channel.name + '" channel.');
       }
     }
-
 
     /*
     1. If the message either doesn't start with the prefix or was sent by a bot, exit early.
