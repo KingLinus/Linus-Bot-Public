@@ -2,6 +2,9 @@ const fs = require('fs');
 const Discord = require('discord.js');
 const ytdl = require('ytdl-core');
 const { prefix, token} = require('./config.json');
+const EventEmitter = require('events');
+const keepAlive = require("./server");
+
 
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
@@ -15,6 +18,7 @@ for (const file of commandFiles){
 
 const cooldowns = new Discord.Collection();
 
+keepAlive()
 client.once('ready', () => {
     console.log('Ready!');
     client.commands.get('quote').execute(1, 'test');
@@ -51,6 +55,7 @@ client.on('message', message => {
 
     //Hidden Meme outputs
     var hiddenmeme = message.content.toLowerCase();
+    if(message.author.bot) hiddenmeme = "";
 	/*if (hiddenmeme.search('hmmm')>-1 && !message.author.bot){
         try {
             const command = client.commands.get('hmmm');
@@ -81,12 +86,57 @@ client.on('message', message => {
         }
     }*/
 
-	if (hiddenmeme.search('when gacha')>-1){
-        return message.channel.send('Never.');
+	  if (hiddenmeme.search('when gacha')>-1){
+      return message.channel.send('Now.');
+		} /*else if (hiddenmeme.search('i am ')>-1) {
+      return message
+              .channel
+              .send('Hi ' 
+                + message
+                    .content
+                    .substring(message
+                      .content
+                      .toLowerCase()
+                      .search('i am ')+5))
+              .then(
+                message
+                  .channel
+                  .send('I am Linus bot')
+              ); 
+    } else if (hiddenmeme.search("i'm ")>-1) {
+      return message
+              .channel
+              .send('Hi ' 
+                + message
+                    .content
+                    .substring(message
+                      .content
+                      .toLowerCase()
+                      .search("i'm ")+4))
+              .then(
+                message
+                  .channel
+                  .send('I am Linus bot')
+              ); 
+    } else if (hiddenmeme.search('im ')==0 
+      || hiddenmeme.search(' im ')>-1) {
+      return message
+              .channel
+              .send('Hi ' 
+                + message
+                    .content
+                    .substring(message
+                      .content
+                      .toLowerCase()
+                      .search('im ')+3))
+              .then(
+                message
+                  .channel
+                  .send('I am Linus bot')
+              ); 
+  }  */    
 
-    }
-
-    //Logs channel
+    //Logs channel, linus bot is a logger, warning
     const LOGCHANNEL = 'logs';
     if (message.channel.type == 'text' && !message.author.bot) {
       var logger = message.guild.channels.find(
@@ -96,7 +146,6 @@ client.on('message', message => {
         logger.send(message.author.username + ' said: "' + message.cleanContent + '" in the "' + message.channel.name + '" channel.');
       }
     }
-
 
     /*
     1. If the message either doesn't start with the prefix or was sent by a bot, exit early.
