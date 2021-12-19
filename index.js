@@ -18,7 +18,7 @@ for (const file of commandFiles){
 
 const cooldowns = new Discord.Collection();
 
-keepAlive()
+keepAlive();
 client.once('ready', () => {
     console.log('Ready!');
     client.commands.get('quote').execute(1, 'test');
