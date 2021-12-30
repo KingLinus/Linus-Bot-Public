@@ -51,7 +51,6 @@ client.on('message', message => {
 					return message.channel.send(`**${lastMessageCAPS}**`);
 					}
 			}
-
 	}*/
 
 	const Database = require("@replit/database");
