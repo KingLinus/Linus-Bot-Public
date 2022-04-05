@@ -259,3 +259,17 @@ client.login(token);
 			}
 
 	}*/
+
+	//Listening for "what" and repeating the last message sent before the command capitalized and bolded
+	/*if ((message.content === 'What' || message.content === 'what' || message.content === 'What?' || message.content === 'what?') && !message.author.bot){
+			if (lastMessage != null) {
+				 var index = sentGuild.indexOf(message.channel.id.toString());
+				 if(index != -1){
+					var lastMessageCAPS = lastMessage[index].toUpperCase();
+					if(message.author.id === lastMessageAuthorId){
+							return;
+					}
+					return message.channel.send(`**${lastMessageCAPS}**`);
+					}
+			}
+	}*/
