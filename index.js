@@ -27,32 +27,13 @@ client.once('ready', () => {
 	client.user.setActivity('Pingu in the city', { type: 'WATCHING' });
 });
 
-//listening for members leaving the server 
-/*client.on('guildMemberRemove', member =>{
-    member.guild.channels.find(channel => channel.name === "general").send('**' + member.user.username + '** has left the server! Press :regional_indicator_f: to pay respects.');
-
-});*/
-
 //Message parser
 var lastMessage = [""];
 var sentGuild = [""];
 var lastMessageAuthorId;
 client.on('message', message => {
 
-	//Listening for "what" and repeating the last message sent before the command capitalized and bolded
-	/*if ((message.content === 'What' || message.content === 'what' || message.content === 'What?' || message.content === 'what?') && !message.author.bot){
-			if (lastMessage != null) {
-				 var index = sentGuild.indexOf(message.channel.id.toString());
-				 if(index != -1){
-					var lastMessageCAPS = lastMessage[index].toUpperCase();
-					if(message.author.id === lastMessageAuthorId){
-							return;
-					}
-					return message.channel.send(`**${lastMessageCAPS}**`);
-					}
-			}
-	}*/
-
+	//init database
 	const Database = require("@replit/database");
 	const db = new Database();
 	db.get(message.guild.id).then(value => {
@@ -63,7 +44,7 @@ client.on('message', message => {
 		}
 	});
 
-	//Logs channel, linus bot is a logger, warning
+	//Finds logs channel and logs messages sent
 	const LOGCHANNEL = 'logs';
 	if (message.channel.type == 'text' && !message.author.bot) {
 		var logger = message.guild.channels.find(
@@ -256,3 +237,39 @@ var sendIAmResponse = function(message, name) {
 }
 
 client.login(token);
+
+//Unused functions
+//listening for members leaving the server 
+/*client.on('guildMemberRemove', member =>{
+    member.guild.channels.find(channel => channel.name === "general").send('**' + member.user.username + '** has left the server! Press :regional_indicator_f: to pay respects.');
+
+});*/
+
+	//Listening for "what" and repeating the last message sent before the command capitalized and bolded
+	/*if ((message.content === 'What' || message.content === 'what' || message.content === 'What?' || message.content === 'what?') && !message.author.bot){
+			if (lastMessage != null) {
+				 var index = sentGuild.indexOf(message.channel.id.toString());
+				 if(index != -1){
+					var lastMessageCAPS = lastMessage[index].toUpperCase();
+					if(message.author.id === lastMessageAuthorId){
+							return;
+					}
+					return message.channel.send(`**${lastMessageCAPS}**`);
+					}
+			}
+
+	}*/
+
+	//Listening for "what" and repeating the last message sent before the command capitalized and bolded
+	/*if ((message.content === 'What' || message.content === 'what' || message.content === 'What?' || message.content === 'what?') && !message.author.bot){
+			if (lastMessage != null) {
+				 var index = sentGuild.indexOf(message.channel.id.toString());
+				 if(index != -1){
+					var lastMessageCAPS = lastMessage[index].toUpperCase();
+					if(message.author.id === lastMessageAuthorId){
+							return;
+					}
+					return message.channel.send(`**${lastMessageCAPS}**`);
+					}
+			}
+	}*/
