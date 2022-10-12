@@ -188,7 +188,7 @@ var executeHiddenMeme = function(client, message) {
 	}
 
 	if (hiddenmeme.search('when gacha') > -1) {
-		return message.channel.send('Now.');
+		return message.channel.send('Never.');
 	} else if (hiddenmeme.search('i am ') > -1) {
 		var name = message
 			.content
