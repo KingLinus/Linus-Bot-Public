@@ -23,5 +23,8 @@
   "bugs": {
     "url": "https://github.com/KingLinus/Linus-Bot/issues"
   },
-  "homepage": "https://github.com/KingLinus/Linus-Bot#readme"
+  "homepage": "https://github.com/KingLinus/Linus-Bot#readme",
+  "devDependencies": {
+    "wrangler": "^3.34.2"
+  }
 }
